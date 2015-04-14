@@ -1,0 +1,99 @@
+public class Suduko {
+	final int ROWS = 9;
+	final int COLUMNS = 9;
+	int[][] board;
+
+	public Suduko(int q) {
+		board = new int[ROWS][COLUMNS];
+		for (int i=0; i<ROWS; i++)
+			for (int j=0; j<COLUMNS; j++)
+				board[i][j] = 0;
+	}
+
+	public Suduko() {
+		board = new int[ROWS][COLUMNS]
+			{
+				{5,3,0,0,7,0,0,0,0},
+				{6,0,0,1,9,5,0,0,0},
+				{0,9,8,0,0,0,0,6,0},
+				{8,0,0,0,6,0,0,0,3},
+				{4,0,0,8,0,3,0,0,1},
+				{7,0,0,0,2,0,0,0,6},
+				{0,6,0,0,0,0,2,8,0},
+				{0,0,0,4,1,9,0,0,5},
+				{0,0,0,0,8,0,0,7,9}
+			};
+	}
+	//prints the current values of the suduko array, including empty spots
+	public void printMySuduko() {
+		for (int i=0; i<ROWS; i++)
+			for (int j=0; j<COLUMNS; j++)
+			{
+				System.out.print(board[i][j]);
+			}
+			System.out.println();
+	}
+	//returns true if able to insert the value indicated in val into the suduko 
+	//array at the location indicated by r-row and c-column and inserts it
+	public boolean insertVal(int r, int c, int val) {
+		if (r<0 || c<0 || r>8 || c>8 || val>9 || val<1)
+		{
+			return false;
+		}
+		else
+		{
+			board[r-1][c-1] = val;
+			return true;
+		}
+	}
+	//returns true if able to remove the value indicated in val into the suduko array at the location indicated by r-row and c-column and removes it
+	public boolean removeVal(int r, int c, int val) {
+		if (r<0 || c<0 || r>8 || c>8 || val>9 || val<1)
+		{
+			return false;
+		}
+		else
+		{
+			board[r-1][c-1] = 0;
+			return true;
+		}
+	}
+	//returns true if it is okay to insert val at location indicated by r-row and c-column along that ROW
+	private boolean checkRow(int r, int c, int val) {
+
+		for(int i=0; i<9; i++)
+		{
+			if (val == board[r][i])
+			{
+				return false;
+			}
+		}
+		return true;
+
+		
+	}
+	//returns true if it is okay to insert val at location indicated by r-row and c-column along that COLUMN
+	private boolean checkCol(int r, int c, int val) {
+		for(int i=0; i<9; i++)
+		{
+			if (val == board[i][c])
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	//returns true if it is okay to insert val at location indicated by r-row and c-column inside that BOX
+	private boolean checkBox(int r, int c, int val) {
+		if (board[r][c] == 0)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+}
+

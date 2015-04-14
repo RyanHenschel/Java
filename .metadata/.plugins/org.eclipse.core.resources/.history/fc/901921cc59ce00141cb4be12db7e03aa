@@ -1,0 +1,24 @@
+import java.util.Scanner;
+public class VenMachTester {
+
+	
+
+		public static void main(String[] args) {
+			Scanner in = new Scanner(System.in);
+				System.out.println("What row? ");
+				int r = in.nextInt();
+				System.out.println("What column? ");
+				int c = in.nextInt();
+				System.out.println("Enter number of quarters: ");
+				int quarters = in.nextInt();
+				
+				
+					VendingMachine vending1 = new VendingMachine();
+					VendingMachine vending2 = new VendingMachine(1);
+					
+					vending1.giveProduct(r, c);
+					in.close();
+				}
+			
+
+}

@@ -1,0 +1,75 @@
+import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+
+/**
+ * @author Ryan Henschel
+ * CS 220
+ * LAB 2 Suduko
+ * 3/12/15
+ * This class allows the user to play
+ * the suduko game
+ */
+
+public class SudukoPlayer extends Suduko {
+
+	/**
+	 * This method interacts with the user and allows
+	 * him/her to play the Suduko game
+	 * 
+	 * @param args is a parameter used 
+	 *        with String to print
+	 */
+
+	public static void main(String[] args) throws FileNotFoundException {
+		Scanner in = new Scanner(System.in);
+		
+		
+		
+		int play = 1;
+		
+		Suduko suduko1 = new Suduko();
+		while (play > 0)
+		{
+			System.out.print("Enter a O to insert a value, a 1 to remove a value, a 2 to quit: ");
+			int user = in.nextInt();
+			
+			if (user == 0)
+			{
+				System.out.print("Please enter the row number: ");
+				int r = in.nextInt();
+				System.out.print("Please enter the column number: ");
+				int c = in.nextInt();
+				System.out.print("Please enter the new value: ");
+				int val = in.nextInt();
+
+				suduko1.insertVal(r, c, val);
+				suduko1.printMySuduko();
+				play++;
+			}
+			else if (user == 1)
+				{
+					System.out.print("Please enter the row number: ");
+					int r = in.nextInt();
+					System.out.print("Please enter the column number: ");
+					int c = in.nextInt();
+					int val = 1;
+					if (r<0 || c<0 || r>ROWS-1 || c>COLUMNS-1 || val>maxVal || val<minVal)
+						throw new IllegalArgumentException("That's an invalid number.");
+					suduko1.removeVal(r, c, val);
+					suduko1.printMySuduko();
+					play++;
+				}
+			else
+			{
+				int play2 = play - 1; 
+				System.out.println("Thank you for playing! You had " + play2 + " moves.");
+				play = 0;
+				
+				in.close();
+				suduko1.closeGame();
+			}
+		}
+	}
+}

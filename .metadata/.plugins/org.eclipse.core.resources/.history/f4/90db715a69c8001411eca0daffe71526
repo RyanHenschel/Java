@@ -1,0 +1,61 @@
+import java.util.Scanner;
+
+public class SudukoPlayer {
+
+	public static void main(String[] args) {
+		Scanner in = new Scanner(System.in);
+		int play = 1;
+		
+		while (play > 0)
+		{
+			
+			System.out.println("Enter a O to insert a value, a 1 to remove a value, a 2 to quit: ");
+			int user = in.nextInt();
+			
+			if (user == 0)
+			{
+				System.out.print("Please enter the row number: ");
+				int r = in.nextInt();
+
+				System.out.print("Please enter the column number: ");
+				int c = in.nextInt();
+
+				System.out.print("Please enter the new value: ");
+				int val = in.nextInt();
+
+				Suduko suduko1 = new Suduko();
+				
+				suduko1.insertVal(r, c, val);
+				
+				suduko1.printMySuduko();
+				
+				play++;
+			}
+			else if (user == 1)
+				{
+				System.out.print("Please enter the row number: ");
+				
+				int r = in.nextInt();
+
+				System.out.print("Please enter the column number: ");
+				int c = in.nextInt();
+				int val = 1;
+				Suduko suduko1 = new Suduko();
+				suduko1.removeVal(r, c, val);
+				suduko1.printMySuduko();
+				
+				play++;
+				}
+			else
+			{
+				int play2 = play - 1; 
+				System.out.println("Thank you for playing! You had " + play2 + " moves.");
+				play = 0;
+				in.close();
+			}
+
+
+		}
+	}
+
+}

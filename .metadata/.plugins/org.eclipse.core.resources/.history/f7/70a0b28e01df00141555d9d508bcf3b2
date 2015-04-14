@@ -1,0 +1,183 @@
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.util.Scanner;
+
+/**
+ * @author Ryan Henschel
+ * CS 220
+ * LAB 2 Suduko
+ * 3/12/15
+ * This class contains methods to create a suduko
+ * puzzle and check and change boxes, if allowed
+ */
+
+public class Suduko {
+	final static int ROWS = 9;
+	final static int COLUMNS = 9;
+	final static int maxVal = 9;
+	final static int minVal = 1;
+	int[][] board;
+
+	/**
+	 * This method is the default constructor
+	 */
+	public Suduko() {
+		board = new int[ROWS][COLUMNS];
+		
+		for (int i=0; i<ROWS; i++)
+			for (int j=0; j<COLUMNS; j++)
+				board[i][j] = 0;
+	}
+
+	/**
+	 * This method is a constructor that sets board
+	 * with a set of predetermined numbers
+	 */
+	public Suduko(String inputFileName) {
+		Scanner in = new Scanner(System.in); 
+		board = new int[ROWS][COLUMNS];
+		String line = in.nextLine();
+		int k = 0;
+		for (int i=0; i<ROWS; i++)
+			for (int j=0; j<COLUMNS; j++)
+				{
+					if (!Character.isDigit(line.charAt(k)))
+					{
+						char ch = line.charAt(k);
+						board[i][j] = ch;	
+					}
+					else
+						board[i][j] = 0;
+					k++;
+				}
+		in.close();
+	}
+	/**
+	 * This method prints every element of the board
+	 * array and places a '|' between every number
+	 */
+	public void printMySuduko() {
+		for (int i=0; i<9; i++)
+		{
+			System.out.print(" | ");
+			for (int j=0; j<9; j++)
+				System.out.print(board[i][j] + " | ");
+				
+			System.out.println();
+		}		
+	}
+	/**
+	 * This method checks to see whether or not a value can be
+	 * inserted at a specific place and then inserts it if it can
+	 * 
+	 * @param r is the row value given by the user
+	 * @param c is the column value given by the user
+	 * @param val is the new value given by the user
+	 * @return returns false if not able to change value
+	 *         and true if able to change value
+	 */
+	public boolean insertVal(int r, int c, int val) {
+		if (checkRow(r, c, val) == false)
+		{
+				System.out.println("Not okay to insert value in this row.");
+				return false;
+		}
+		else if (checkCol(r, c, val) == false)
+		{
+			System.out.println("Not okay to insert value in this column.");
+			return false;
+		}
+		else if (checkBox(r, c, val) == false)
+		{
+			System.out.println("Not okay to insert value in this box.");
+			return false;
+		}
+		else
+		{
+			board[r-1][c-1] = val;
+			return true;
+		}
+	}
+	/**
+	 * This method checks to see if a value can be removed
+	 * from board and then removes it if the method returns true
+	 * 
+	 * @param r is the row value given by the user
+	 * @param c is the column value given by the user
+	 * @param val is the new value given by the user
+	 * @return returns false if unable to remove value
+	 *     and true if able to, then removes it if true
+	 */
+	public boolean removeVal(int r, int c, int val) {
+		if (r<0 || c<0 || r>8 || c>8 || val>9 || val<1)
+			return false;
+		else
+		{
+			board[r-1][c-1] = 0;
+			return true;
+		}
+	}
+	/**
+	 * This method checks to see if the new value is in
+	 * the same row as the parameter r
+	 * 
+	 * @param r is the row value given by the user
+	 * @param c is the column value given by the user
+	 * @param val is the new value given by the user
+	 * @return returns false if the value given is in 
+	 *         the same row, returns true otherwise
+	 */
+	private boolean checkRow(int r, int c, int val) {
+
+		for(int i=0; i<COLUMNS; i++)
+		{
+			if (val == board[r][i])
+				return false;
+		}
+		return true;
+	}
+	/**
+	 * This method checks to see if the new value is in
+	 * the same column as the parameter c
+	 * 
+	 * @param r is the row value given by the user
+	 * @param c is the column value given by the user
+	 * @param val is the new value given by the user
+	 * @return returns false if the value given is in 
+	 *         the same column, returns true otherwise
+	 */
+	private boolean checkCol(int r, int c, int val) {
+		for(int i=0; i<ROWS; i++)
+		{
+			if (val == board[i][c])
+				return false;
+		}
+		return true;
+	}
+	/**
+	 * This method checks to see if the new value is in
+	 * a box that already has a number
+	 * 
+	 * @param r is the row value given by the user
+	 * @param c is the column value given by the user
+	 * @param val is the new value given by the user
+	 * @return returns false if the box given already 
+	 *      has a number in it, returns true otherwise
+	 */
+	private boolean checkBox(int r, int c, int val) {
+		for (int i=0; i<ROWS; i+=3)
+			for (int j=0; j<COLUMNS; j+=3)
+				if (val == board[i][j])
+					return false;
+		return true;
+	}
+	public void closeGame() throws FileNotFoundException {
+		Scanner output = new Scanner(System.in);
+		System.out.print("Output file: ");
+        String outputFileName = output.next();
+        PrintWriter outputFile = new PrintWriter(outputFileName);
+        outputFile.close();
+        output.close();
+	}
+}
+

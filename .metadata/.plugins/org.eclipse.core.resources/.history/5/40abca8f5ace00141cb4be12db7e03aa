@@ -1,0 +1,51 @@
+
+public class VendingMachine {
+	private final int ROWS = 5;
+	private final int COLUMNS = 5;
+	private final int DEPTH = 5;
+	
+	int[][][] machine;
+	
+	public VendingMachine() {
+		machine = new int[ROWS][COLUMNS][DEPTH];
+		//sets an empty vending machine
+		for (int i=0; i<ROWS; i++)
+			for (int j=0; j<COLUMNS; j++)
+				for (int k=0; k<DEPTH; k++)
+					machine[i][j][k] = 0;
+	}
+	
+	public VendingMachine(int a) {
+		machine = new int[ROWS][COLUMNS][DEPTH];
+		//fills vending machine
+		for (int i=0; i<ROWS; i++)
+			for (int j=0; j<COLUMNS; j++)
+				for (int k=0; k<DEPTH; k++)
+					machine[i][j][k] = 1;
+	}
+	
+	public boolean takeMoney(int quarters) {
+		if (quarters != 1)
+			return false;
+		else
+			return true;
+	}
+	
+	public void giveProduct(int r, int c) {
+		if (r<0 || r>4 || c<0 || c>4)
+			System.out.println("Not a valid row or column.");
+		else
+		{
+			for (int d=0; d<DEPTH; d++)
+			{
+				if (machine[r][c][d] == 1)
+				{
+					machine[r][c][d] = 0;
+					break;
+				}
+				else
+					System.out.println("Out of product.");
+			}
+		}
+	}
+}

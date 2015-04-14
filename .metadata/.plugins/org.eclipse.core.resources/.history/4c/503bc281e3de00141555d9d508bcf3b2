@@ -1,0 +1,45 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Scanner;
+/**
+This program applies line numbers to a file.
+ */
+public class SudukoFile
+{
+    //public static void main(String[] args) throws FileNotFoundException
+    {
+        // Prompt for the input and output file names
+    	Scanner in = new Scanner(System.in);
+    	File inputFile = null;
+    	System.out.print("Input file: ");
+        
+    	try
+    	{
+    		String inputFileName = in.next();
+    		inputFile = new File(inputFileName);
+    		//Exception FileNotFoundException = null;
+			//throw FileNotFoundException;
+    	}
+    	catch (FileNotFoundException exception)
+    	{
+    		System.out.println("The file does not exist. A default file will be loaded for you.");
+    		String inputFileName = "suduko.txt";
+    		inputFile = new File(inputFileName);
+    		in.close();
+    	}
+        // Construct the Scanner and PrintWriter objects for reading and writing
+        Scanner input = new Scanner(inputFile);
+        
+        input.close();
+        
+    }
+	
+	
+}
+//input.useDelimiter("");
+//String line = in.nextLine();
+//while (input.hasNext())
+//{
+//}

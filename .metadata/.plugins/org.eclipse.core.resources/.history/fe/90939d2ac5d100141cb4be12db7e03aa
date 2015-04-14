@@ -1,0 +1,40 @@
+import java.util.Scanner;
+public class VenMachTester {
+
+
+
+	public static void main(String[] args) {
+		Scanner in = new Scanner(System.in);
+		boolean vend = true;
+
+		VendingMachine vending = new VendingMachine(1);
+		VenMachBaseball vending1 = new VenMachBaseball();
+		while (vend)
+		{
+			System.out.print("Row 1: Little League baseballs. Row 2,3: High School baseballs. Row 4,5: College baseballs.");
+			System.out.println(" Which row do you want? ");
+			int r = in.nextInt();
+			System.out.print("Which column do you want? ");
+			int c = in.nextInt();
+			vending1.productCost(r);
+			System.out.print("How many dollars are you entering? ");
+			int dollars = in.nextInt();
+			System.out.print("How many quarters are you entering? ");
+			int quarters = in.nextInt();
+			if (dollars + quarters <= 0) {
+				System.out.println("Please come back when you have money.");
+				vend = false;
+			}
+			else {
+			vending1.takeMoney(dollars, quarters);
+			vending1.giveChange();
+			vending1.giveProduct(r, c);
+			}
+			
+				
+		}
+		in.close();
+	}
+
+
+}

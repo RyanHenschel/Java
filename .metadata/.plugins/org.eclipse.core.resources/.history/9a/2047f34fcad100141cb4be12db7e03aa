@@ -1,0 +1,70 @@
+
+public class VenMachBaseball extends VendingMachine {
+	private final double DOLLARS = 1.00;
+	private final double QUARTERS = 0.25;
+	private double dollarValue;
+	private double quarterValue;
+	private double moneyGiven;
+	private double totalMoney;
+	private static double totCompMon = 0;
+	private double moneyOwed;
+	private static double moneyOwed2 = 0;
+	private double expenses;
+	private int count = 0;
+	private double count2 = 0;
+	
+	public void productCost(int r) {
+		if (r-1 == 0) {
+			moneyOwed = 1.00;
+			System.out.println("This product costs $" + moneyOwed);
+		}
+		else if (r-1 == 1 || r-1 == 2) {
+			moneyOwed = 1.25;
+			System.out.println("This product costs $" + moneyOwed);
+		}
+		else {
+			moneyOwed = 1.50;
+			System.out.println("This product costs $" + moneyOwed);
+		}
+	}
+	
+	public void takeMoney(int dollars, int quarters) {
+		dollarValue = dollars*DOLLARS;
+		quarterValue = quarters*QUARTERS;
+		moneyGiven = dollarValue + quarterValue;	
+	}
+	
+	public void giveChange() {
+		if (moneyGiven < moneyOwed)
+			System.out.println("Not enough money.");
+		else {
+			double change = moneyGiven - moneyOwed;
+			System.out.println("Your change is $" + change);		
+		}
+	}
+	
+	public void machineProfit() {
+			totalMoney = totalMoney + moneyOwed;
+			System.out.println("The total money for this machine is $" + totalMoney);
+	}
+	
+	public static void totalProfit() {
+		totCompMon = totCompMon + moneyOwed2;
+		System.out.println("The total money for the company is $" + totCompMon);
+	}
+	
+	public void expenses() {
+		count2++;
+		expenses = count2*.5;
+		System.out.println("The total number of expenses is $" + expenses);
+	}
+	
+	public void inventory(int r, int c) {
+		int[] slot = machine[r-1][c-1];
+		for (int i = 0; i < slot.length; i++)
+			if (slot[i] == 1)
+				count++;
+		System.out.println("There are " + count + "baseballs in this space.");
+	}
+	
+}

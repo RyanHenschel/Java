@@ -1,0 +1,204 @@
+/**
+ * @author Ryan Henschel
+ * CS 220
+ * LAB 2 Suduko
+ * 3/12/15
+ * This class contains methods to create a suduko
+ * puzzle and check and change boxes, if allowed
+ */
+
+public class Suduko {
+	final int ROWS = 9;
+	final int COLUMNS = 9;
+	final int maxVal = 9;
+	final int minVal = 1;
+	int[][] board;
+
+	/**
+	 * This method is the default constructor
+	 * @param q is a just a parameter to make 
+	 * 			the two constructors different
+	 */
+	public Suduko(int q) {
+		board = new int[ROWS][COLUMNS];
+		
+		for (int i=0; i<ROWS; i++)
+			for (int j=0; j<COLUMNS; j++)
+				board[i][j] = 0;
+	}
+
+	/**
+	 * This method is a constructor that sets board
+	 * with a set of predetermined numbers
+	 */
+	public Suduko() {
+		board = new int[ROWS][COLUMNS];
+		
+		for (int i=0; i<ROWS; i++)
+			for (int j=0; j<COLUMNS; j++)
+				board[i][j] = 0;
+		
+		board[0][0] = 5;
+		board[0][1] = 3;
+		board[0][4] = 7;
+		board[1][0] = 6;
+		board[1][3] = 1;
+		board[1][4] = 9;
+		board[1][5] = 5;
+		board[2][1] = 9;
+		board[2][2] = 8;
+		board[2][7] = 6;
+		board[3][0] = 8;
+		board[3][4] = 6;
+		board[3][8] = 3;
+		board[4][0] = 4;
+		board[4][3] = 8;
+		board[4][5] = 3;
+		board[4][8] = 1;
+		board[5][0] = 7;
+		board[5][4] = 2;
+		board[5][8] = 6;
+		board[6][1] = 6;
+		board[6][6] = 2;
+		board[6][7] = 8;
+		board[7][3] = 4;
+		board[7][4] = 1;
+		board[7][5] = 9;
+		board[7][8] = 5;
+		board[8][4] = 8;
+		board[8][7] = 7;
+		board[8][8] = 9;
+	}
+	/**
+	 * This method prints every element of the board
+	 * array and places a '|' between every number
+	 */
+	public void printMySuduko() {
+		for (int i=0; i<9; i++)
+		{
+			System.out.print(" | ");
+			for (int j=0; j<9; j++)
+				System.out.print(board[i][j] + " | ");
+				
+			System.out.println();
+		}		
+	}
+	/**
+	 * This method checks to see whether or not a value can be
+	 * inserted at a specific place and then inserts it if it can
+	 * 
+	 * @param r is the row value given by the user
+	 * @param c is the column value given by the user
+	 * @param val is the new value given by the user
+	 * @return returns false if not able to change value
+	 *         and true if able to change value
+	 */
+	public boolean insertVal(int r, int c, int val) {
+		
+		if (r<0 || c<0 || r>ROWS-1 || c>COLUMNS-1 || val>maxVal || val<minVal)
+		{
+			System.out.println("Not a valid input.");
+			return false;
+		}
+			
+		else if (checkRow(r, c, val) == false)
+		{
+				System.out.println("Not okay to insert value in this row.");
+				return false;
+		}
+		else if (checkCol(r, c, val) == false)
+		{
+			System.out.println("Not okay to insert value in this column.");
+			return false;
+		}
+		else if (checkBox(r, c, val) == false)
+		{
+			System.out.println("Not okay to insert value in this box.");
+			return false;
+		}
+		else
+		{
+			board[r-1][c-1] = val;
+			return true;
+		}
+	}
+	/**
+	 * This method checks to see if a value can be removed
+	 * from board and then removes it if the method returns true
+	 * 
+	 * @param r is the row value given by the user
+	 * @param c is the column value given by the user
+	 * @param val is the new value given by the user
+	 * @return returns false if unable to remove value
+	 *     and true if able to, then removes it if true
+	 */
+	public boolean removeVal(int r, int c, int val) {
+		if (r<0 || c<0 || r>8 || c>8 || val>9 || val<1)
+			return false;
+		else
+		{
+			board[r-1][c-1] = 0;
+			return true;
+		}
+	}
+	/**
+	 * This method checks to see if the new value is in
+	 * the same row as the parameter r
+	 * 
+	 * @param r is the row value given by the user
+	 * @param c is the column value given by the user
+	 * @param val is the new value given by the user
+	 * @return returns false if the value given is in 
+	 *         the same row, returns true otherwise
+	 */
+	private boolean checkRow(int r, int c, int val) {
+
+		for(int i=0; i<COLUMNS; i++)
+		{
+			if (val == board[r][i])
+				return false;
+		}
+		return true;
+	}
+	/**
+	 * This method checks to see if the new value is in
+	 * the same column as the parameter c
+	 * 
+	 * @param r is the row value given by the user
+	 * @param c is the column value given by the user
+	 * @param val is the new value given by the user
+	 * @return returns false if the value given is in 
+	 *         the same column, returns true otherwise
+	 */
+	private boolean checkCol(int r, int c, int val) {
+		for(int i=0; i<ROWS; i++)
+		{
+			if (val == board[i][c])
+				return false;
+		}
+		return true;
+	}
+	/**
+	 * This method checks to see if the new value is in
+	 * a box that already has a number
+	 * 
+	 * @param r is the row value given by the user
+	 * @param c is the column value given by the user
+	 * @param val is the new value given by the user
+	 * @return returns false if the box given already 
+	 *      has a number in it, returns true otherwise
+	 */
+
+	private boolean checkBox(int r, int c, int val) {
+		for (int i=0; i<ROWS; i+=3)
+			for (int j=0; j<COLUMNS; j+=3)
+				if (val == board[i][j])
+					return false;
+		return true;
+	}
+	
+	public void openPuzzle() {
+		
+	}
+}
+

@@ -1,0 +1,48 @@
+import java.util.Scanner;
+public class VenMachTester {
+
+
+
+	public static void main(String[] args) {
+		Scanner in = new Scanner(System.in);
+		boolean vend = true;
+		while (vend)
+		{
+			System.out.println("How many quarters are you entering? " );
+			int quarters = in.nextInt();
+			if (quarters == 1)
+			{
+				System.out.println("What row? ");
+				int r = in.nextInt();
+				System.out.println("What column? ");
+				int c = in.nextInt();
+
+
+				VendingMachine vending1 = new VendingMachine();
+				//VendingMachine vending2 = new VendingMachine(1);
+
+				vending1.giveProduct(r, c);
+			}
+
+			else if (quarters > 1)
+			{
+				System.out.println("You entered too many quarters.");
+				vend = false;
+			}
+			else if (quarters == 0)
+			{
+				System.out.println("You have to enter a quarter to buy something.");
+				vend = false;
+			}
+			else
+			{
+				System.out.println("Invalid answer.");
+				vend = false;
+			}
+				
+		}
+		in.close();
+	}
+
+
+}

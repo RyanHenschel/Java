@@ -1,0 +1,52 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+
+public class DataAnalysis {
+	String line;
+	String numbers;
+	int numberOfGrades;
+	int[] gradeList;
+	
+	public void reader() throws FileNotFoundException {
+		Scanner console = new Scanner(System.in);
+        System.out.print("Input file: ");
+        String inputFileName = console.next();
+        File inputFile = new File(inputFileName);
+        Scanner input = new Scanner(inputFile);
+        line = input.nextLine();
+		input.close();
+		console.close();
+	}
+	
+	public int numberOfGrades() {
+		for (int i=0; i<line.length(); i++)
+			numberOfGrades++;
+		numberOfGrades = (numberOfGrades + 1)/3;
+		return numberOfGrades;
+	}
+	
+	public void createArray(int numberOfGrades) {
+		int[] gradeList = new int[numberOfGrades];
+		int numbers1;
+		String numbers = line.trim();
+		String test = "12345";
+		for (int i=0; i<numberOfGrades; i++)
+			for (int j=0; j<numberOfGrades*2; j++)
+			{
+				try {
+					numbers1 = Integer.parseInt(test);
+					System.out.print(numbers1);
+				}
+				catch (NumberFormatException exception) {
+					System.out.println("String contained non-integers.");
+				}
+				
+			}
+		
+			
+			
+		
+	}
+}

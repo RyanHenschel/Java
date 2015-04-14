@@ -1,0 +1,53 @@
+
+public class VenMachBaseball extends VendingMachine {
+	private final int DOLLARS = 1;
+	private final double QUARTERS = 0.25;
+	private int dollarValue;
+	private int quarterValue;
+	private double moneyGiven;
+	private double totalMoney;
+	private double moneyOwed;
+	private int count = 0;
+	
+	public void productCost(int r) {
+		if (r-1 == 0) {
+			moneyOwed = 1;
+			System.out.println("This product costs $" + moneyOwed);
+		}
+		else if (r-1 == 1 || r-1 == 2) {
+			moneyOwed = 1.25;
+			System.out.println("This product costs $" + moneyOwed);
+		}
+		else {
+			moneyOwed = 1.5;
+			System.out.println("This product costs $" + moneyOwed);
+		}
+	}
+	
+	public void takeMoney(int dollars, int quarters) {
+		dollarValue = dollars*DOLLARS;
+		quarterValue = (int) (quarters*QUARTERS);
+		moneyGiven = dollarValue + quarterValue;	
+	}
+	
+	public void giveChange() {
+		if (moneyGiven < moneyOwed)
+			System.out.println("Not enough money.");
+		else {
+			double change = moneyGiven - moneyOwed;
+			System.out.println("Your change is $" + change + ".");		
+		}
+	}
+	
+	public void moneyCalculator() {
+			totalMoney = totalMoney + moneyOwed;
+		}
+	public void inventory(int r, int c) {
+		int[] slot = machine[r-1][c-1];
+		for (int i = 0; i < slot.length; i++)
+			if (slot[i] == 1)
+				count++;
+		System.out.println("There are " + count + "baseballs in this space.");
+	}
+	
+}

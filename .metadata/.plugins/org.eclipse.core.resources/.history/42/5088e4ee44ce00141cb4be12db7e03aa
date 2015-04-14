@@ -1,0 +1,4 @@
+
+public class BaseballVendingMachine extends VendingMachine {
+
+}
