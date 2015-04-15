@@ -1,0 +1,164 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+
+public class DataAnalysis {
+	String line;
+	String numbers;
+	int average;
+	public final int MAX_ARRAY_SIZE = 20;
+	private int[] gradeList = new int[MAX_ARRAY_SIZE];
+	private int numberOfGrades;
+	
+	public void reader() throws FileNotFoundException {
+		Scanner console = new Scanner(System.in);
+        System.out.print("Input file: ");
+        String inputFileName = console.next();
+        File inputFile = new File(inputFileName);
+        Scanner input = new Scanner(inputFile);
+        line = input.nextLine();
+		input.close();
+		console.close();
+	}
+	
+	public int numberOfGrades() {
+		for (int i=0; i<line.length(); i++)
+			numberOfGrades++;
+		numberOfGrades = (numberOfGrades + 1)/3;
+		//System.out.println(numberOfGrades);
+		return numberOfGrades;
+	}
+	
+	public void getNumberOfGrades() {
+		System.out.println("The number of grades entered is " + numberOfGrades);
+	}
+	
+	public void createArray() {
+		int numbers1;
+		int n = numberOfGrades*3;
+		int i=0;
+		int k=0;
+		while (i<n)
+			{ 
+				numbers = line.substring(i, i+2);
+				try {
+					numbers1 = Integer.parseInt(numbers);
+					gradeList[k] = numbers1;
+					i=i+3;
+					k++;
+				}
+				catch (NumberFormatException exception) {
+					System.out.println("String contained non-integers.");
+				}
+			}	
+	}
+	
+	public void printArray() {
+		for (int i=0; i<numberOfGrades; i++)
+			System.out.print(gradeList[i] + " ");
+	}
+
+	public void numberSorter() {
+		for (int i=0; i<gradeList.length -1; i++)
+		{
+			int minPos = minimumPosition(i);
+			swap(minPos, i);
+		}
+	}
+	
+	private int minimumPosition(int from) {
+		int minPos = from;
+		for (int i=from+1; i<gradeList.length; i++)
+			if (gradeList[i] < gradeList[minPos])
+				minPos = i;
+		return minPos;
+	}
+	
+	private void swap(int i, int j) {
+		int temporary = gradeList[i];
+		gradeList[i] = gradeList[j];
+		gradeList[j] = temporary;
+	}
+
+	public void average() {
+		int total = 0;
+		for (int i=0; i<gradeList.length-1; i++)
+			total = total + gradeList[i];
+		average = total/numberOfGrades;
+		System.out.println("The grade average is " + average + ".");		
+	}
+
+	public void standardDeviation() {
+		double sd1;
+		double sd2;
+		double sd3 = 0;
+		double sd4;
+		double standardDeviation;
+		for (int i=0; i<gradeList.length; i++)
+		{
+			sd1 = gradeList[i] - average;
+			sd2 = sd1*sd1;
+			sd3 = sd3 + sd2;
+		}
+		sd4 = sd3/numberOfGrades;
+		standardDeviation = (int) Math.sqrt(sd4);
+		System.out.println("The standard deviation of the grades is " + standardDeviation + ".");
+	}
+	
+	public void fiveNumberSummary() {
+		int max = gradeList[gradeList.length-1];
+		int min = gradeList[0];
+		int median;
+		if (numberOfGrades%2 == 1)
+		{
+			int half = gradeList.length/2;
+			median = gradeList[half];
+		}
+		else
+		{
+			int half = gradeList.length/2;
+			int middle1 = gradeList[half - 1];
+			int middle2 = gradeList[half];
+			median = (middle1+middle2)/2;
+		}
+	}
+	
+	public void range() {
+		int max = gradeList[gradeList.length-1];
+		int min = gradeList[0];
+		int range = max-min;
+		System.out.println("The range of the grades is " + range + ".");
+	}
+
+	public void letterGrades() {
+		int a=0;
+		int b=0;
+		int c=0;
+		int d=0;
+		int f=0;
+		for (int i=0; i<gradeList.length; i++)
+		{
+			if (gradeList[i] >= 90)
+				a++;
+			else if (gradeList[i] >= 80)
+				b++;
+			else if (gradeList[i] >= 70)
+				c++;
+			else if (gradeList[i] >= 60)
+				d++;
+			else
+				f++;
+		}
+		System.out.println("The number of A's is " + a + ".");
+		System.out.println("The number of B's is " + b + ".");
+		System.out.println("The number of C's is " + c + ".");
+		System.out.println("The number of D's is " + d + ".");
+		System.out.println("The number of F's is " + f + ".");
+	}
+
+	public void findGrade() {
+		
+	}
+
+}

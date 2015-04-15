@@ -1,0 +1,71 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+import java.io.PrintWriter;
+
+public class DataAnalysisProgram {
+
+	public static void main(String[] args) throws FileNotFoundException {
+		DataAnalysis data1 = new DataAnalysis();
+		data1.reader();
+		data1.numberOfGrades();
+		data1.createArray();
+		data1.numberSorter();
+
+		Scanner in = new Scanner(System.in);
+		boolean program = true;
+		int z;
+		while (program)
+		{
+			System.out.println("Enter one of the numbers below for the type of analysis:");
+			System.out.println("0 - to quit");
+			System.out.println("1 - show the grades");
+			System.out.println("2 - show minimum grade");
+			System.out.println("3 - show median grade");
+			System.out.println("4 - show maximum grade");
+			System.out.println("5 - show the 5-number summary");
+			System.out.println("6 - show the average of the grades");
+			System.out.println("7 - show the standard deviation of the grades");
+			System.out.println("8 - show the grade range");
+			System.out.println("9 - show the letter grades");
+			System.out.println("10 - show the graphical analysis");	        	
+
+			System.out.print("What would you like to check? ");
+			z = in.nextInt();
+
+			if (z == 0)
+			{
+				System.out.println("You chose to close the program. Thank you!");
+				program = false;
+			}
+			else if (z == 1)
+			{
+				data1.printArray();
+				System.out.println();
+			}
+			else if (z == 2)
+				data1.minimum();
+			else if (z == 3)
+				data1.median();
+			else if (z == 4)
+				data1.maximum();
+			else if (z == 5)
+				data1.fiveNumberSummary();
+			else if (z == 6)
+				data1.average();
+			else if (z == 7)
+				data1.standardDeviation();
+			else if (z == 8)
+				data1.range();
+			else if (z == 9)
+				data1.letterGrades();
+			else if (z == 10)
+				data1.average();
+			else
+				//System.out.println("Sorry. Invalid input.");
+				throw new IllegalArgumentException("That's an invalid number.");
+			in.close();
+		}
+	}
+	
+}
